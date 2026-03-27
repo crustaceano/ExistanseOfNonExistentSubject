@@ -3,7 +3,8 @@ from numpy.linalg import LinAlgError
 import scipy
 from datetime import datetime
 from collections import defaultdict
-
+from scipy.optimize import line_search
+from 
 
 class LineSearchTool(object):
     """
@@ -34,6 +35,7 @@ class LineSearchTool(object):
             self.c1 = kwargs.get('c1', 1e-4)
             self.c2 = kwargs.get('c2', 0.9)
             self.alpha_0 = kwargs.get('alpha_0', 1.0)
+            self.beta = kwargs.get('beta', 1 / 2)
         elif self._method == 'Armijo':
             self.c1 = kwargs.get('c1', 1e-4)
             self.alpha_0 = kwargs.get('alpha_0', 1.0)
@@ -54,6 +56,12 @@ class LineSearchTool(object):
     
     def check_armijo(self, oracle, x_k, d_k, alpha):
         return oracle.func_directional(x_k, d_k, alpha) <= oracle.func_directional(x_k, d_k, 0) + self.c1 * alpha * oracle.grad_directional(x_k, d_k, 0)
+    
+    def backtracking(self, oracle, x_k, d_k, previous_alpha):
+        alpha = self.alpha_0 if previous_alpha is None else previous_alpha
+        while not self.check_armijo(oracle, x_k, d_k, alpha):
+            alpha *= self.beta
+        return alpha
 
     def line_search(self, oracle, x_k, d_k, previous_alpha=None):
         """
@@ -79,16 +87,15 @@ class LineSearchTool(object):
         alpha : float or None if failure
             Chosen step size
         """
-        if self.method == 'Armijo':
-            alpha = self.alpha_0
-            while not self.check_armijo(oracle, x_k, d_k, alpha):
-                alpha *= self.beta
+        if self._method == 'Armijo':
+            return self.backtracking(oracle, x_k, d_k, previous_alpha)
+        elif self._method == 'Wolfe':
+            alpha = line_search(oracle.func, oracle.grad, x_k, d_k, c1=self.c1, c2=self.c2)[0]
+            if alpha is None:
+                return self.backtracking(oracle, x_k, d_k, previous_alpha)
             return alpha
-        elif self._method == 'Constant':
+        else:
             return self.c
-        
-
-        return None
 
 
 def get_line_search_tool(line_search_options=None):
