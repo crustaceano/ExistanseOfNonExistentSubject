@@ -37,6 +37,7 @@ class LineSearchTool(object):
         elif self._method == 'Armijo':
             self.c1 = kwargs.get('c1', 1e-4)
             self.alpha_0 = kwargs.get('alpha_0', 1.0)
+            self.beta = kwargs.get('beta', 1 / 2)
         elif self._method == 'Constant':
             self.c = kwargs.get('c', 1.0)
         else:
@@ -50,6 +51,9 @@ class LineSearchTool(object):
 
     def to_dict(self):
         return self.__dict__
+    
+    def check_armijo(self, oracle, x_k, d_k, alpha):
+        return oracle.func_directional(x_k, d_k, alpha) <= oracle.func_directional(x_k, d_k, 0) + self.c1 * alpha * oracle.grad_directional(x_k, d_k, 0)
 
     def line_search(self, oracle, x_k, d_k, previous_alpha=None):
         """
@@ -75,7 +79,15 @@ class LineSearchTool(object):
         alpha : float or None if failure
             Chosen step size
         """
-        # TODO: Implement line search procedures for Armijo, Wolfe and Constant steps.
+        if self.method == 'Armijo':
+            alpha = self.alpha_0
+            while not self.check_armijo(oracle, x_k, d_k, alpha):
+                alpha *= self.beta
+            return alpha
+        elif self._method == 'Constant':
+            return self.c
+        
+
         return None
 
 
