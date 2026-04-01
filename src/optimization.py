@@ -4,6 +4,7 @@ import scipy
 from scipy.linalg import cho_factor, cho_solve, eigh
 import time
 from collections import defaultdict
+import copy
 from scipy.optimize._linesearch import scalar_search_wolfe2
 
 
@@ -16,7 +17,7 @@ def update_history(oracle, x_k, history, start_time, trace):
         history['func'].append(oracle.func(x_k))
         history['grad_norm'].append(np.linalg.norm(oracle(x_k).grad()))
         if x_k.size <= 2:
-            history['x'].append(x_k)
+            history['x'].append(x_k.copy())
 
 
 class LineSearchTool(object):
