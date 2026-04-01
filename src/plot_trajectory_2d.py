@@ -32,7 +32,7 @@ def plot_levels(func, xrange=None, yrange=None, levels=None):
     plt.grid()              
 
         
-def plot_trajectory(func, history, fit_axis=False, label=None, log=None):
+def plot_trajectory(func, history, fit_axis=False, label=None):
     """
     Plotting the trajectory of a method. 
     Use after plot_levels(...).
@@ -47,24 +47,13 @@ def plot_trajectory(func, history, fit_axis=False, label=None, log=None):
     x_values, y_values = zip(*history)
     plt.plot(x_values, y_values, '-v', linewidth=5.0, ms=12.0, 
              alpha=1.0, c='r', label=label)
-    if log == True:
-        plt.xscale('log')
-        plt.yscale('log')
-    
     # Tries to adapt axis-ranges for the trajectory:
     
     if fit_axis:
         COEF = 1.5
-        if log:
-            x_positive = [x for x in x_values if x > 0]
-            y_positive = [y for y in y_values if y > 0]
-            if x_positive and y_positive:
-                plt.xlim(min(x_positive) / COEF, max(x_positive) * COEF)
-                plt.ylim(min(y_positive) / COEF, max(y_positive) * COEF)
-        else:
-            xmax, ymax = np.max(np.abs(x_values)), np.max(np.abs(y_values))
-            xrange = [-xmax * COEF, xmax * COEF]
-            yrange = [-ymax * COEF, ymax * COEF]
-            plt.xlim(xrange)
-            plt.ylim(yrange)
+        xmax, ymax = np.max(np.abs(x_values)), np.max(np.abs(y_values))
+        xrange = [-xmax * COEF, xmax * COEF]
+        yrange = [-ymax * COEF, ymax * COEF]
+        plt.xlim(xrange)
+        plt.ylim(yrange)
 
