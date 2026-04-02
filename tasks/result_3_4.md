@@ -88,6 +88,20 @@ $$
 | a9a | 178 | 1,73 | 4 | 0,15 |
 | gisette_scale.bz2 | 1874 | 1576,9 | 6 | 2320,2 |
 
+<img width="936" height="582" alt="image" src="https://github.com/user-attachments/assets/b06506d2-7c7a-450c-8060-dc202ac82245" />
+<img width="960" height="576" alt="image" src="https://github.com/user-attachments/assets/0bb7a4a6-d099-40d0-8282-7d1548f1a010" />
+
+<img width="959" height="566" alt="image" src="https://github.com/user-attachments/assets/f25b9cbf-cb1d-4be9-b280-7f4c0757d3b9" />
+<img width="1018" height="578" alt="image" src="https://github.com/user-attachments/assets/817aff29-c624-484d-8f3c-1505f75d3942" />
+
+<img width="972" height="574" alt="image" src="https://github.com/user-attachments/assets/77cf104f-052b-4d04-956c-21870253fbcf" />
+<img width="1007" height="585" alt="image" src="https://github.com/user-attachments/assets/d836eaf4-51d2-4561-bb14-e57f3939782f" />
+
+<img width="970" height="565" alt="image" src="https://github.com/user-attachments/assets/954b29f9-dbb5-4372-a636-976ee203aaeb" />
+<img width="1000" height="588" alt="image" src="https://github.com/user-attachments/assets/e9af9f03-8dab-4f41-aceb-b9d36d6a23e9" />
+
+
+
 ## г) Выводы и связь с теорией
 
 1. Малые и умеренные $n$ (abalone, bodyfat, a9a): метод Ньютона использует информацию о кривизне и даёт мало итераций; локально ожидаема квадратичная (суперлинейная) сходимость около минимума — на графике нормы градиента это проявляется как быстрый спад за короткое время. Суммарное настенное время до того же критерия в этих экспериментах у Ньютона меньше, чем у ГС.
