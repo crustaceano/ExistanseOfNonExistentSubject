@@ -263,6 +263,7 @@ def newton(oracle, x_0, tolerance=1e-5, max_iter=100,
             - history['func'] : list of function values f(x_k) on every step of the algorithm
             - history['grad_norm'] : list of values Euclidian norms ||g(x_k)|| of the gradient on every step of the algorithm
             - history['x'] : list of np.arrays, containing the trajectory of the algorithm. ONLY STORE IF x.size <= 2
+            - history['alpha'] : list of line-search step sizes used at each iteration (one entry per successful step)
 
     Example:
     --------
@@ -307,6 +308,9 @@ def newton(oracle, x_0, tolerance=1e-5, max_iter=100,
                 return x_k, 'computational_error', history
         except Exception:
             return x_k, 'computational_error', history
+
+        if trace:
+            history['alpha'].append(float(step_size))
 
         update_history(oracle, x_k, history, start_time, trace)
         if stop_criterion(oracle, x_k, x_0, tolerance):
