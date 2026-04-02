@@ -42,7 +42,7 @@ CPU: Intel i5-12700H
 
 График изменения $\gamma$
 
-![Alt text](../figs/task8/gamma_evo.png)
+![График изменения $\gamma$](../figs/task8/gamma_evo.png)
 
 Можно увидеть, что оно очень быстро уменьшается
 
@@ -57,7 +57,7 @@ CPU: Intel i5-12700H
 
 Вот сравнение скорости методов. ExponentialLoss, gisette
 
-![Alt text](../figs/task8/time_comp.png)
+![Вот сравнение скорости методов. ExponentialLoss, gisette](../figs/task8/time_comp.png)
 
 
 Методы работают примерно с такой же скоростью. Разве что shift метод немног быстрее, видимо, из-за более обусловленной матрицы 
